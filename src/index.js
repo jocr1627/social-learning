@@ -15,6 +15,17 @@ import superagent from 'superagent';
 
 const root = document.querySelector('#root');
 
+const getCountQuery = `
+  {
+    count
+  }
+`;
+const setCountQuery = `
+  mutation SetCount($count: Int) {
+    setCount(count: $count)
+  }
+`;
+
 const renderApp = (initialCount) => {
   const COUNT_CHANGED = 'COUNT_CHANGED';
 
@@ -27,16 +38,13 @@ const renderApp = (initialCount) => {
         type: 'COUNT_CHANGED',
       });
       
-      superagent.post('/db/count').timeout(500).send({ count }).end(() => {
-        superagent.get('/db/count')
-          .timeout(500)
-          .end((error, response) => {
-            dispatch({
-              payload: response.body.rows[0].count,
-              type: 'COUNT_CHANGED',
-            });
-          });
-      });
+      superagent.post('/graphql')
+        .timeout(500)
+        .send({
+          query: setCountQuery,
+          variables: { count },
+        })
+        .end();
     };
   };
 
@@ -102,11 +110,12 @@ const renderApp = (initialCount) => {
   render(<App/>, root);
 };
 
-superagent.get('/db/count')
+superagent.post('/graphql')
   .timeout(500)
+  .send({ query: getCountQuery })
   .end((error, response) => {
     if (response.status == 200) {
-      const count = response.body.rows[0].count;
+      const count = response.body.data.count;
 
       renderApp(count);
     } else {

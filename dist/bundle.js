@@ -16052,6 +16052,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var root = document.querySelector('#root');
 
+var getCountQuery = '\n  {\n    count\n  }\n';
+var setCountQuery = '\n  mutation SetCount($count: Int) {\n    setCount(count: $count)\n  }\n';
+
 var renderApp = function renderApp(initialCount) {
   var COUNT_CHANGED = 'COUNT_CHANGED';
 
@@ -16064,14 +16067,10 @@ var renderApp = function renderApp(initialCount) {
         type: 'COUNT_CHANGED'
       });
 
-      _superagent2.default.post('/db/count').timeout(500).send({ count: count }).end(function () {
-        _superagent2.default.get('/db/count').timeout(500).end(function (error, response) {
-          dispatch({
-            payload: response.body.rows[0].count,
-            type: 'COUNT_CHANGED'
-          });
-        });
-      });
+      _superagent2.default.post('/graphql').timeout(500).send({
+        query: setCountQuery,
+        variables: { count: count }
+      }).end();
     };
   };
 
@@ -16181,9 +16180,9 @@ var renderApp = function renderApp(initialCount) {
   (0, _reactDom.render)(_react2.default.createElement(App, null), root);
 };
 
-_superagent2.default.get('/db/count').timeout(500).end(function (error, response) {
+_superagent2.default.post('/graphql').timeout(500).send({ query: getCountQuery }).end(function (error, response) {
   if (response.status == 200) {
-    var count = response.body.rows[0].count;
+    var count = response.body.data.count;
 
     renderApp(count);
   } else {
