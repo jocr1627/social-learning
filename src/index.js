@@ -1,3 +1,11 @@
+import {
+  FloatingActionButton,
+  MuiThemeProvider,
+} from 'material-ui';
+import {
+  ContentAdd,
+  ContentRemove,
+} from 'material-ui/svg-icons';
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { connect, Provider } from 'react-redux';
@@ -47,17 +55,19 @@ class App extends Component {
     };
 
     return (
-      <Provider { ...providerProps }>
-        <div>
-          <button { ...incrementButtonProps }>
-            +
-          </button>
-          <button { ...decrementButtonProps }>
-            -
-          </button>
-          <CounterContainer/>
-        </div>
-      </Provider>
+      <MuiThemeProvider>
+        <Provider { ...providerProps }>
+          <div>
+            <FloatingActionButton { ...incrementButtonProps }>
+              <ContentAdd/>
+            </FloatingActionButton>
+            <FloatingActionButton { ...decrementButtonProps }>
+              <ContentRemove/>
+            </FloatingActionButton>
+            <CounterContainer/>
+          </div>
+        </Provider>
+      </MuiThemeProvider>
     );
   }
 }
