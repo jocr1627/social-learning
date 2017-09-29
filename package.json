@@ -2,21 +2,27 @@
   "name": "social-learning",
   "version": "0.0.0",
   "description": "A social media platform dedicated to education.",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "build": "npm run clean && babel src --out-dir dist",
+    "build": "npm run clean && webpack",
     "clean": "rm -rf dist",
-    "dev": "npm run build && node-debug .",
+    "dev": "npm run build && webpack-dev-server --open",
     "lint": "eslint . --fix q--max-warnings=0 && echo 'No errors' || echo 'Finished with errors'",
-    "start": "npm run build && node .",
+    "start": "node ./server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "John Cronk <john.a.cronk@gmail.com>",
   "license": "ISC",
   "devDependencies": {
     "babel-cli": "^6.26.0",
+    "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.0",
     "eslint": "^4.7.2",
-    "eslint-plugin-react": "^7.4.0"
+    "eslint-plugin-react": "^7.4.0",
+    "webpack": "^3.6.0",
+    "webpack-dev-server": "^2.9.1"
+  },
+  "dependencies": {
+    "express": "^4.16.0"
   }
 }
