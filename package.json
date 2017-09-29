@@ -4,8 +4,16 @@
   "description": "A social media platform dedicated to education.",
   "main": "index.js",
   "scripts": {
+    "build": "npm run clean && babel src --out-dir dist",
+    "clean": "rm -rf dist",
+    "dev": "npm run build && node-debug .",
+    "start": "npm run build && node .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "John Cronk <john.a.cronk@gmail.com>",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.0"
+  }
 }
