@@ -1,0 +1,26 @@
+.sl-CreateAccountForm {
+  display: inline-block;
+  width: 20rem;
+}
+
+.sl-CreateAccountForm-button {
+  text-align: center;
+}
+
+.sl-CreateAccountForm-field label {
+  font-size: 0.8rem;
+}
+
+.sl-CreateAccountForm-grid {
+  padding: 1rem;
+}
+
+.sl-CreateAccountForm-notification {
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.sl-CreateAccountForm-title {
+  font-size: 1rem;
+  text-align: center;
+}

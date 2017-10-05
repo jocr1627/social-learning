@@ -1,16 +1,34 @@
+input CreateUserInput {
+  name: String!
+  password: String!
+}
+
 interface Node {
   id: ID!
 }
 
-type Counter implements Node {
-  count: Int
-  id: ID!
+type CreateUserPayload {
+  user: User!
 }
 
 type Mutation {
-  setCount(id: ID!, count: Int): Counter
+  createUser(input: CreateUserInput!): CreateUserPayload
 }
 
 type Query {
-  counter(id: ID!): Counter
+  node(id: ID!): Node
+}
+
+type User implements Node {
+  id: ID!
+  name: String!
+}
+
+type UserConnection {
+  count: Int!
+  edges: [UserEdge]
+}
+
+type UserEdge {
+  node: User!
 }
