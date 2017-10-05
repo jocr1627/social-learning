@@ -13,20 +13,33 @@ const distPath = express.static(path.join(__dirname, './dist'));
 const indexPath = path.join(__dirname, './index.html');
 const port = (process.env.PORT || 8080);
 const rootValue = {
-  count: () => client
-    .query('SELECT * from count')
-    .then((response) => response.rows[0].count),
+  counter: (variables) => client
+    .query('SELECT * from counters where id = $1', [variables.id])
+    .then((response) => {
+      return { count: response.rows[0].count, id: variables.id };
+    }),
   setCount: (variables) => client
-    .query('UPDATE count SET count = $1', [variables.count])
-    .then(() => variables.count)
+    .query('UPDATE counters SET count = $1 where id = $2', [variables.count, variables.id])
+    .then(() => {
+      return { count: variables.count, id: variables.id };
+    }),
 };
 const schema = graphql.buildSchema(`
+  interface Node {
+    id: ID!
+  }
+
+  type Counter implements Node {
+    count: Int
+    id: ID!
+  }
+
   type Mutation {
-    setCount(count: Int): Int
+    setCount(id: ID!, count: Int): Counter
   }
 
   type Query {
-    count: Int
+    counter(id: ID!): Counter
   }
 `);
 

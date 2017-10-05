@@ -1,0 +1,16 @@
+interface Node {
+  id: ID!
+}
+
+type Counter implements Node {
+  count: Int
+  id: ID!
+}
+
+type Mutation {
+  setCount(id: ID!, count: Int): Counter
+}
+
+type Query {
+  counter(id: ID!): Counter
+}

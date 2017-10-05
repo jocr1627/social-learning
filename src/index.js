@@ -8,90 +8,96 @@ import {
 } from 'material-ui/svg-icons';
 import React, { Component } from 'react';
 import { render } from 'react-dom';
-import { connect, Provider } from 'react-redux';
-import { applyMiddleware, createStore } from 'redux';
-import thunk from 'redux-thunk';
-import superagent from 'superagent';
+import {
+  commitMutation,
+  graphql,
+  QueryRenderer,
+} from 'react-relay';
+import {
+  Environment,
+  Network,
+  RecordSource,
+  Store,
+} from 'relay-runtime';
 
 const root = document.querySelector('#root');
+const counterId = 1;
 
-const getCountQuery = `
-  {
-    count
-  }
-`;
-const setCountQuery = `
-  mutation SetCount($count: Int) {
-    setCount(count: $count)
-  }
-`;
+const source = new RecordSource();
+const store = new Store(source);
+const fetchQuery = (operation, variables) => {
+  return fetch('/graphql', {
+    body: JSON.stringify({
+      query: operation.text,
+      variables,
+    }),
+    headers: {
+      'content-type': 'application/json'
+    },
+    method: 'POST',
+  }).then(response => response.json());
+};
+const network = Network.create(fetchQuery);
+const environment = new Environment({
+  network,
+  store,
+});
 
-const renderApp = (initialCount) => {
-  const COUNT_CHANGED = 'COUNT_CHANGED';
-
-  const countChanged = (delta) => {
-    return (dispatch, getState) => {
-      const count = getState() + delta;
-
-      dispatch({
-        payload: count,
-        type: 'COUNT_CHANGED',
-      });
-      
-      superagent.post('/graphql')
-        .timeout(500)
-        .send({
-          query: setCountQuery,
-          variables: { count },
-        })
-        .end();
-    };
-  };
-
-  const reducer = (state = initialCount, action) => {
-    switch(action.type) {
-    case COUNT_CHANGED:
-      return action.payload;
-    default:
-      return state;
-    }
-  };
-
-  const middleware = applyMiddleware(thunk);
-  const store = createStore(reducer, middleware);
-
-  class Counter extends Component {
-    render() {
-      const {
-        count,
-      } = this.props;
-
-      return <div>{ count }</div>;
+const counterQuery = graphql`
+  query srcQuery($id: ID!) {
+    counter(id: $id) {
+      count
     }
   }
+`;
+const setCountMutation = graphql`
+  mutation srcMutation($id: ID!, $count: Int) {
+    setCount(id: $id, count: $count) {
+      count
+    }
+  }
+`;
 
-  const mapStateToProps = (state) => {
-    return {
-      count: state,
-    };
-  };
-  const CounterContainer = connect(mapStateToProps)(Counter);
+const countChanged = (count) => {
+  commitMutation(
+    environment,
+    {
+      mutation: setCountMutation,
+      updater: (store) => {
+        const counterRef = store.get(counterId);
 
-  class App extends Component {
-    render() {
-      const decrementButtonProps = {
-        onClick: () => store.dispatch(countChanged(-1)),
-      };
-      const incrementButtonProps = {
-        onClick: () => store.dispatch(countChanged(1)),
-      };
-      const providerProps = {
-        store,
-      };
+        counterRef.setValue(count, 'count'); 
+      },
+      variables: { count, id: counterId },
+    }
+  );
+};
 
-      return (
-        <MuiThemeProvider>
-          <Provider { ...providerProps }>
+class App extends Component {
+  render() {
+    const queryRendererProps = {
+      environment,
+      query: counterQuery,
+      variables: { id: counterId },
+      render: ({ props }) => {
+        if (!props) {
+          return null;
+        }
+
+        const {
+          counter: {
+            count,
+          },
+        } = props;
+        const incrementButtonProps = {
+          onClick: () => countChanged(count + 1),
+        };
+        const decrementButtonProps = {
+          onClick: () => countChanged(count - 1),
+        };
+
+        return (
+          <MuiThemeProvider>
             <div>
               <FloatingActionButton { ...incrementButtonProps }>
                 <ContentAdd/>
@@ -99,38 +105,15 @@ const renderApp = (initialCount) => {
               <FloatingActionButton { ...decrementButtonProps }>
                 <ContentRemove/>
               </FloatingActionButton>
-              <CounterContainer/>
+              <div>{ count }</div>
             </div>
-          </Provider>
-        </MuiThemeProvider>
-      );
-    }
+          </MuiThemeProvider>
+        );
+      },
+    };
+
+    return <QueryRenderer { ...queryRendererProps }/>;
   }
+}
 
-  render(<App/>, root);
-};
-
-superagent.post('/graphql')
-  .timeout(500)
-  .send({ query: getCountQuery })
-  .end((error, response) => {
-    if (response.status == 200) {
-      const count = response.body.data.count;
-
-      renderApp(count);
-    } else {
-      const failureMessage = `DB Request Failed: ${response.status}`;
-      const failureDiv = (
-        <div>
-          <div>
-            { failureMessage }
-          </div>
-          <div>
-            { response.responseText }
-          </div>
-        </div>
-      );
-    
-      render(failureDiv, root);
-    }
-  });
+render(<App/>, root);
