@@ -3,6 +3,11 @@ input CreateUserInput {
   password: String!
 }
 
+input LoginInput {
+  name: String!
+  password: String!
+}
+
 interface Node {
   id: ID!
 }
@@ -11,12 +16,18 @@ type CreateUserPayload {
   user: User!
 }
 
+type LoginPayload {
+  user: User
+}
+
 type Mutation {
   createUser(input: CreateUserInput!): CreateUserPayload
+  login(input: LoginInput!): LoginPayload
 }
 
 type Query {
   node(id: ID!): Node
+  viewer: Viewer!
 }
 
 type User implements Node {
@@ -24,11 +35,7 @@ type User implements Node {
   name: String!
 }
 
-type UserConnection {
-  count: Int!
-  edges: [UserEdge]
-}
-
-type UserEdge {
-  node: User!
+type Viewer {
+  user: User
+  id: ID!
 }

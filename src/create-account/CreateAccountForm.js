@@ -9,7 +9,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
 import { getClassName } from '../css/CssUtils';
-import createUserMutation from '../user/CreateUserMutation';
+import createUser from '../user/CreateUserMutation';
 
 import './CreateAccountForm.css';
 
@@ -64,7 +64,6 @@ const usernameRules = [
   requiredRule,
 ];
 
-const confirmLabelText = 'Confirm your password';
 const notificationConfigs = {
   duplicate: {
     color: '#D80000',
@@ -79,12 +78,6 @@ const notificationConfigs = {
     text: 'Your account was created successfully!',
   },
 };
-const passwordLabelText = 'Password';
-const titleText = 'Create Account';
-const usernameLabelText = 'Username';
-
-const displayName = 'CreateAccountForm';
-
 const getNotificationType = (errors) => {  
   if (!errors) {
     return 'success';
@@ -107,6 +100,13 @@ const getState = (overrides) => {
   };
 };
 
+const confirmLabelText = 'Confirm your password';
+const passwordLabelText = 'Password';
+const titleText = 'Create Account';
+const usernameLabelText = 'Username';
+
+const displayName = 'CreateAccountForm';
+
 export default class CreateAccountForm extends Component {
   static displayName = displayName;
   
@@ -122,7 +122,6 @@ export default class CreateAccountForm extends Component {
       usernameErrorText,
       usernameValue,
     } = this.state;
-
     const paperProps = {
       className: getClassName(displayName),
       onKeyPress: (key) => {
@@ -133,13 +132,11 @@ export default class CreateAccountForm extends Component {
       },
       zDepth: 2,
     };
-
     const gridListProps = {
       cellHeight: 20,
       className: getClassName(displayName, 'grid'),
       cols: 1,
     };
-
     const notificationConfig = notificationConfigs[notificationType] || {};
     const notificationTileProps = {
       className: getClassName(displayName, 'notification'),
@@ -148,17 +145,14 @@ export default class CreateAccountForm extends Component {
         color: notificationConfig.color,
       },
     };
-
     const titleTileProps = {
       className: getClassName(displayName, 'title'),
       rows: 1,
     };
-
     const fieldTileProps = {
       className: getClassName(displayName, 'field'),
       rows: 4,
     };
-
     const usernameFieldProps = {
       errorText: usernameErrorText,
       fullWidth: true,
@@ -166,14 +160,13 @@ export default class CreateAccountForm extends Component {
       onBlur: () => {
         const usernameErrorText = this.getUsernameErrorText();
 
-        this.setState({ notificationType: '', usernameErrorText });
+        this.setState({ usernameErrorText });
       },
       onChange: (event, usernameValue) => {
-        return this.setState({ notificationType: '', usernameValue });
+        return this.setState({ usernameValue });
       },
       value: usernameValue,
     };
-
     const passwordFieldProps = {
       errorText: passwordErrorText,
       fullWidth: true,
@@ -181,15 +174,14 @@ export default class CreateAccountForm extends Component {
       onBlur: () => {
         const passwordErrorText = this.getPasswordErrorText();
 
-        this.setState({ notificationType: '', passwordErrorText });
+        this.setState({ passwordErrorText });
       },
       onChange: (event, passwordValue) => {
-        return this.setState({ confirmValue: '', notificationType: '', passwordValue });
+        return this.setState({ confirmValue: '', passwordValue });
       },
       type: 'password',
       value: passwordValue,
     };
-
     const confirmFieldProps = {
       errorText: confirmErrorText,
       fullWidth: true,
@@ -197,20 +189,18 @@ export default class CreateAccountForm extends Component {
       onBlur: () => {
         const confirmErrorText = this.getConfirmErrorText();
 
-        this.setState({ confirmErrorText, notificationType: '' });
+        this.setState({ confirmErrorText });
       },
       onChange: (event, confirmValue) => {
-        return this.setState({ confirmValue, notificationType: '' });
+        return this.setState({ confirmValue });
       },
       type: 'password',
       value: confirmValue,
     };
-
     const buttonTileProps = {
       className: getClassName(displayName, 'button'),
       rows: 2,
     };
-
     const buttonProps = {
       label: 'Create Account',
       onClick: this.onClickCreateAccount,
@@ -277,7 +267,7 @@ export default class CreateAccountForm extends Component {
         usernameValue,
       } = this.state;
       
-      createUserMutation(usernameValue, passwordValue, (data, errors) => {
+      createUser(usernameValue, passwordValue, (data, errors) => {
         const notificationType = getNotificationType(errors);        
         const state = getState({ notificationType });
 

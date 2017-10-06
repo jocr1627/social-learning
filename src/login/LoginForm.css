@@ -1,30 +1,31 @@
-.sl-CreateAccountForm {
+.sl-LoginForm {
   display: inline-block;
   width: 20rem;
 }
 
-.sl-CreateAccountForm-button {
+.sl-LoginForm-button {
   text-align: center;
 }
 
-.sl-CreateAccountForm-field input {
+.sl-LoginForm-field input {
   box-shadow: 0 0 0 2rem white inset;
 }
 
-.sl-CreateAccountForm-field label {
+.sl-LoginForm-field label {
   font-size: 0.8rem;
 }
 
-.sl-CreateAccountForm-grid {
+.sl-LoginForm-grid {
   padding: 1rem;
 }
 
-.sl-CreateAccountForm-notification {
+.sl-LoginForm-notification {
+  color: #D80000;
   font-size: 0.8rem;
   text-align: center;
 }
 
-.sl-CreateAccountForm-title {
+.sl-LoginForm-title {
   font-size: 1rem;
   text-align: center;
 }
