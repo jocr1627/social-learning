@@ -19,22 +19,22 @@ export default class App extends Component {
     const rootRouteProps = {
       exact: true,
       path: '/',
-      render: () => localStorage.getItem('user_id') ? homeRedirect : <LoginPage/>,
+      render: () => localStorage.getItem('userId') ? homeRedirect : <LoginPage/>,
     };
     const createAccountRouteProps = {
       exact: true,
       path: '/createAccount',
-      render: () => localStorage.getItem('user_id') ? homeRedirect : <CreateAccountPage/>,
+      render: () => localStorage.getItem('userId') ? homeRedirect : <CreateAccountPage/>,
     };
     const loginRouteProps = {
       exact: true,
       path: '/login',
-      render: () => localStorage.getItem('user_id') ? homeRedirect : <LoginPage/>,
+      render: () => localStorage.getItem('userId') ? homeRedirect : <LoginPage/>,
     };
     const postsRouteProps = {
       exact: true,
       path: '/posts',
-      render: () => localStorage.getItem('user_id') ? <PostsPage/> : loginRedirect,
+      render: () => localStorage.getItem('userId') ? <PostsPage/> : loginRedirect,
     };
 
     return (

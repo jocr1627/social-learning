@@ -12,10 +12,12 @@
   text-align: center;
 }
 
-.sl-PostForm-field {
-  border: 0.1rem solid lightgray;
-}
-
 .sl-PostForm-grid {
   padding: 1rem;
+}
+
+.sl-PostForm-notification {
+  color: #D80000;
+  font-size: 0.7rem;
+  text-align: center;
 }

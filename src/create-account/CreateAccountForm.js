@@ -64,41 +64,32 @@ const usernameRules = [
   requiredRule,
 ];
 
-const notificationConfigs = {
-  duplicate: {
-    color: '#D80000',
-    notification: <label>Sorry! That account name already exists!</label>,
-  },
-  error: {
-    color: '#D80000',
-    notification: <label>Sorry! We failed to create your account!'</label>,
-  },
-  success: {
-    color: '#28A328',
-    notification: (
-      <label>
-        Your account was created successfully!
-        <a href="/login">
-          Login.
-        </a>
-      </label>
-    ),
-  },
+const notifications = {
+  duplicate: <label style={ { color: '#D80000' } }>Sorry! That account name already exists!</label>,
+  error: <label style={ { color: '#D80000' } }>Sorry! We failed to create your account!</label>,
+  success: (
+    <label style={ { color: '#28A328' } }>
+      Your account was created successfully!
+      <a href="/login">
+        Login.
+      </a>
+    </label>
+  ),
 };
-const getNotificationType = (errors) => {  
+const getNotification = (errors) => {  
   if (!errors) {
-    return 'success';
+    return notifications.success;
   } else if (errors.some((error) => error.message.indexOf('duplicate') >= 0)) {
-    return 'duplicate';
+    return notifications.duplicate;
   } else {
-    return 'error';
+    return notifications.error;
   }
 };
 const getState = (overrides) => {
   return {
     confirmErrorText: '',
     confirmValue: '',
-    notificationType: '',
+    notification: null,
     passwordErrorText: '',
     passwordValue: '',
     usernameErrorText: '',
@@ -125,7 +116,7 @@ export default class CreateAccountForm extends Component {
     const {
       confirmErrorText,
       confirmValue,
-      notificationType,
+      notification,
       passwordErrorText,
       passwordValue,
       usernameErrorText,
@@ -146,14 +137,10 @@ export default class CreateAccountForm extends Component {
       className: getClassName(displayName, 'grid'),
       cols: 3,
     };
-    const notificationConfig = notificationConfigs[notificationType] || {};
     const notificationTileProps = {
       className: getClassName(displayName, 'notification'),
       cols: 3,
       rows: 1,
-      style: {
-        color: notificationConfig.color,
-      },
     };
     const titleTileProps = {
       className: getClassName(displayName, 'title'),
@@ -236,7 +223,7 @@ export default class CreateAccountForm extends Component {
             </label>
           </GridTile>
           <GridTile { ...notificationTileProps }>
-            { notificationConfig.notification }
+            { notification }
           </GridTile>
           <GridTile { ...fieldTileProps }>
             <label>
@@ -280,7 +267,7 @@ export default class CreateAccountForm extends Component {
     if (confirmErrorText || passwordErrorText || usernameErrorText) {
       this.setState({
         confirmErrorText,
-        notificationType: '',
+        notification: null,
         passwordErrorText,
         usernameErrorText,
       });
@@ -291,8 +278,8 @@ export default class CreateAccountForm extends Component {
       } = this.state;
       
       createUser(usernameValue, passwordValue, (data, errors) => {
-        const notificationType = getNotificationType(errors);        
-        const state = getState({ notificationType });
+        const notification = getNotification(errors);        
+        const state = getState({ notification });
 
         this.setState(state);
       });

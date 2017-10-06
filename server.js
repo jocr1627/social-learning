@@ -15,9 +15,22 @@ const indexPath = path.join(__dirname, './index.html');
 const port = (process.env.PORT || 8080);
 const rawSchema = fs.readFileSync('./schema.graphql', 'utf-8');
 const rootValue = {
+  createPost: ({ input }) => client.query(`
+      INSERT INTO posts (text, user_id) VALUES ($1, $2)
+        RETURNING creation_date, id, text, user_id
+    `,
+    [input.text, input.user_id]
+  ).then((results) => {
+    const post = results.rows[0];
+
+    return {
+      edge: { node: post },
+      post,
+    };
+  }),
   createUser: ({ input }) => client.query(`
-    INSERT INTO users (name, pswhash) VALUES ($1, crypt($2, gen_salt('md5')))
-      RETURNING id, name
+      INSERT INTO users (name, pswhash) VALUES ($1, crypt($2, gen_salt('md5')))
+        RETURNING id, name
     `,
     [input.name, input.password]
   ).then((results) => {
@@ -35,6 +48,21 @@ const rootValue = {
   ).then((results) => {
     return { user: results.rows[0] };
   }),
+  viewer: {
+    id: 0,
+    posts: ({ sortColumn, sortDirection }) => {
+      return client.query(`
+          SELECT * FROM posts ORDER BY ${sortColumn} ${sortDirection}
+        `
+      ).then((results) => {
+        const edges = results.rows.map((row) => {
+          return { node: row };
+        });
+
+        return { edges };
+      });
+    },
+  },
 };
 const schema = graphql.buildSchema(rawSchema);
 const sendIndex =  (_, response) => { response.sendFile(indexPath); };

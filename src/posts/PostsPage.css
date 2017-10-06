@@ -4,7 +4,13 @@
   top: 0.5rem;
 }
 
-.sl-PostsPage {
+.sl-PostsPage-form {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+}
+
+.sl-PostsPage-list {
   display: flex;
   flex-flow: row wrap;
   justify-content: center;

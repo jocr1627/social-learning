@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 138b42d69b0608e687e9fecb27c9747c
+ * @relayHash c6edf2a8f8e96f3cc78c4810ccbd4863
  */
 
 /* eslint-disable */
@@ -12,17 +12,21 @@ import type {ConcreteBatch} from 'relay-runtime';
 export type CreatePostMutationVariables = {|
   input: {
     text: string;
-    userId: string;
+    user_id: string;
   };
 |};
 export type CreatePostMutationResponse = {|
   +createPost: ?{|
-    +post: ?{|
-      +text: string;
-      +user: {|
+    +edge: ?{|
+      +node: ?{|
+        +creation_date: string;
         +id: string;
-        +name: string;
+        +text: string;
+        +user_id: string;
       |};
+    |};
+    +viewer: ?{|
+      +id: string;
     |};
   |};
 |};
@@ -34,12 +38,16 @@ mutation CreatePostMutation(
   $input: CreatePostInput!
 ) {
   createPost(input: $input) {
-    post {
-      text
-      user {
+    edge {
+      node {
+        creation_date
         id
-        name
+        text
+        user_id
       }
+    }
+    viewer {
+      id
     }
   }
 }
@@ -78,25 +86,25 @@ const batch /*: ConcreteBatch*/ = {
             "kind": "LinkedField",
             "alias": null,
             "args": null,
-            "concreteType": "Post",
-            "name": "post",
+            "concreteType": "PostEdge",
+            "name": "edge",
             "plural": false,
             "selections": [
-              {
-                "kind": "ScalarField",
-                "alias": null,
-                "args": null,
-                "name": "text",
-                "storageKey": null
-              },
               {
                 "kind": "LinkedField",
                 "alias": null,
                 "args": null,
-                "concreteType": "User",
-                "name": "user",
+                "concreteType": "Post",
+                "name": "node",
                 "plural": false,
                 "selections": [
+                  {
+                    "kind": "ScalarField",
+                    "alias": null,
+                    "args": null,
+                    "name": "creation_date",
+                    "storageKey": null
+                  },
                   {
                     "kind": "ScalarField",
                     "alias": null,
@@ -108,10 +116,35 @@ const batch /*: ConcreteBatch*/ = {
                     "kind": "ScalarField",
                     "alias": null,
                     "args": null,
-                    "name": "name",
+                    "name": "text",
+                    "storageKey": null
+                  },
+                  {
+                    "kind": "ScalarField",
+                    "alias": null,
+                    "args": null,
+                    "name": "user_id",
                     "storageKey": null
                   }
                 ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          },
+          {
+            "kind": "LinkedField",
+            "alias": null,
+            "args": null,
+            "concreteType": "Viewer",
+            "name": "viewer",
+            "plural": false,
+            "selections": [
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "args": null,
+                "name": "id",
                 "storageKey": null
               }
             ],
@@ -159,25 +192,25 @@ const batch /*: ConcreteBatch*/ = {
             "kind": "LinkedField",
             "alias": null,
             "args": null,
-            "concreteType": "Post",
-            "name": "post",
+            "concreteType": "PostEdge",
+            "name": "edge",
             "plural": false,
             "selections": [
-              {
-                "kind": "ScalarField",
-                "alias": null,
-                "args": null,
-                "name": "text",
-                "storageKey": null
-              },
               {
                 "kind": "LinkedField",
                 "alias": null,
                 "args": null,
-                "concreteType": "User",
-                "name": "user",
+                "concreteType": "Post",
+                "name": "node",
                 "plural": false,
                 "selections": [
+                  {
+                    "kind": "ScalarField",
+                    "alias": null,
+                    "args": null,
+                    "name": "creation_date",
+                    "storageKey": null
+                  },
                   {
                     "kind": "ScalarField",
                     "alias": null,
@@ -189,10 +222,35 @@ const batch /*: ConcreteBatch*/ = {
                     "kind": "ScalarField",
                     "alias": null,
                     "args": null,
-                    "name": "name",
+                    "name": "text",
+                    "storageKey": null
+                  },
+                  {
+                    "kind": "ScalarField",
+                    "alias": null,
+                    "args": null,
+                    "name": "user_id",
                     "storageKey": null
                   }
                 ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          },
+          {
+            "kind": "LinkedField",
+            "alias": null,
+            "args": null,
+            "concreteType": "Viewer",
+            "name": "viewer",
+            "plural": false,
+            "selections": [
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "args": null,
+                "name": "id",
                 "storageKey": null
               }
             ],
@@ -203,7 +261,7 @@ const batch /*: ConcreteBatch*/ = {
       }
     ]
   },
-  "text": "mutation CreatePostMutation(\n  $input: CreatePostInput!\n) {\n  createPost(input: $input) {\n    post {\n      text\n      user {\n        id\n        name\n      }\n    }\n  }\n}\n"
+  "text": "mutation CreatePostMutation(\n  $input: CreatePostInput!\n) {\n  createPost(input: $input) {\n    edge {\n      node {\n        creation_date\n        id\n        text\n        user_id\n      }\n    }\n    viewer {\n      id\n    }\n  }\n}\n"
 };
 
 module.exports = batch;

@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash df7377f080958111dbd8250fcfe0032c
+ * @relayHash 43118e9a108701b9133013639b6237fc
  */
 
 /* eslint-disable */
@@ -19,7 +19,6 @@ export type CreateUserMutationResponse = {|
   +createUser: ?{|
     +user: ?{|
       +id: string;
-      +name: string;
     |};
   |};
 |};
@@ -33,7 +32,6 @@ mutation CreateUserMutation(
   createUser(input: $input) {
     user {
       id
-      name
     }
   }
 }
@@ -81,13 +79,6 @@ const batch /*: ConcreteBatch*/ = {
                 "alias": null,
                 "args": null,
                 "name": "id",
-                "storageKey": null
-              },
-              {
-                "kind": "ScalarField",
-                "alias": null,
-                "args": null,
-                "name": "name",
                 "storageKey": null
               }
             ],
@@ -145,13 +136,6 @@ const batch /*: ConcreteBatch*/ = {
                 "args": null,
                 "name": "id",
                 "storageKey": null
-              },
-              {
-                "kind": "ScalarField",
-                "alias": null,
-                "args": null,
-                "name": "name",
-                "storageKey": null
               }
             ],
             "storageKey": null
@@ -161,7 +145,7 @@ const batch /*: ConcreteBatch*/ = {
       }
     ]
   },
-  "text": "mutation CreateUserMutation(\n  $input: CreateUserInput!\n) {\n  createUser(input: $input) {\n    user {\n      id\n      name\n    }\n  }\n}\n"
+  "text": "mutation CreateUserMutation(\n  $input: CreateUserInput!\n) {\n  createUser(input: $input) {\n    user {\n      id\n    }\n  }\n}\n"
 };
 
 module.exports = batch;

@@ -15,7 +15,7 @@ export default class LogoutButton extends Component {
       className: getClassName(displayName),
       label: logoutButtonText,
       onClick: (history) => {
-        localStorage.removeItem('user_id');
+        localStorage.removeItem('userId');
         history.push('/');
       },
       type: 'raised',

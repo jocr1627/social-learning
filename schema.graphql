@@ -1,6 +1,11 @@
+enum SortDirection {
+  ASC
+  DESC
+}
+
 input CreatePostInput {
   text: String!
-  userId: ID!
+  user_id: ID!
 }
 
 input CreateUserInput {
@@ -18,7 +23,8 @@ interface Node {
 }
 
 type CreatePostPayload {
-  post: Post
+  edge: PostEdge
+  viewer: Viewer
 }
 
 type CreateUserPayload {
@@ -35,9 +41,29 @@ type Mutation {
   login(input: LoginInput!): LoginPayload
 }
 
+type PageInfo {
+  hasNextPage: Boolean
+  hasPreviousPage: Boolean
+  startCursor: String
+  endCursor: String
+}
+
 type Post {
+  creation_date: String!
+  id: ID!
   text: String!
-  user: User!
+  user_id: ID!
+}
+
+type PostConnection {
+  cursor: Int!
+  edges: [PostEdge]
+  pageInfo: PageInfo
+}
+
+type PostEdge {
+  node: Post
+  cursor: String
 }
 
 type Query {
@@ -50,7 +76,9 @@ type User implements Node {
   name: String!
 }
 
-type Viewer {
-  user: User
+type Viewer implements Node {
+  posts(first: Int, sortColumn: String, sortDirection: SortDirection): PostConnection!
   id: ID!
+  Post(id: ID): Post
+  user: User
 }

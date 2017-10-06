@@ -23,7 +23,11 @@ export default function login(name, password, onCompleted) {
       onCompleted: (data, ...args) => {
         const id = data.login.user && data.login.user.id;
 
-        localStorage.setItem('user_id', id);
+        if (id) {
+          localStorage.setItem('userId', id);
+        } else {
+          localStorage.removeItem('userId');
+        }
 
         onCompleted(data, ...args);
       },
