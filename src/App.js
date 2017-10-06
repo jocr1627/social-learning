@@ -4,31 +4,37 @@ import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 
 import CreateAccountPage from './create-account/CreateAccountPage';
 import LoginPage from './login/LoginPage';
-
-const PostsPage = () => <div>Login Succeeded!</div>;
+import PostsPage from './posts/PostsPage';
 
 export default class App extends Component {
   render() {
-    const userId = localStorage.getItem('user_id');
+    const homeRedirectProps = {
+      to: '/posts',
+    };
+    const homeRedirect = <Redirect { ...homeRedirectProps }/>;
+    const loginRedirectProps = {
+      to: '/login',
+    };
+    const loginRedirect = <Redirect { ...loginRedirectProps }/>;
     const rootRouteProps = {
       exact: true,
       path: '/',
-      render: () => userId ? <Redirect to="/posts"/> : <LoginPage/>,
+      render: () => localStorage.getItem('user_id') ? homeRedirect : <LoginPage/>,
     };
     const createAccountRouteProps = {
       exact: true,
       path: '/createAccount',
-      render: () => userId ? <Redirect to="/posts"/> : <CreateAccountPage/>,
+      render: () => localStorage.getItem('user_id') ? homeRedirect : <CreateAccountPage/>,
     };
     const loginRouteProps = {
       exact: true,
       path: '/login',
-      render: () => userId ? <Redirect to="/posts"/> : <LoginPage/>,
+      render: () => localStorage.getItem('user_id') ? homeRedirect : <LoginPage/>,
     };
     const postsRouteProps = {
-      component: PostsPage,
       exact: true,
       path: '/posts',
+      render: () => localStorage.getItem('user_id') ? <PostsPage/> : loginRedirect,
     };
 
     return (
