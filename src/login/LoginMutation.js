@@ -21,7 +21,9 @@ export default function login(name, password, onCompleted) {
     {
       mutation,
       onCompleted: (data, ...args) => {
-        localStorage.setItem('user_id', data.login.user.id);
+        const id = data.login.user && data.login.user.id;
+
+        localStorage.setItem('user_id', id);
 
         onCompleted(data, ...args);
       },

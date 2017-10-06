@@ -19,6 +19,14 @@
   padding: 1rem;
 }
 
+.sl-LoginForm-link {
+  font-size: 0.7rem;
+  left: 10%;
+  position: relative;
+  text-align: center;
+  top: 25%;
+}
+
 .sl-LoginForm-notification {
   color: #D80000;
   font-size: 0.8rem;

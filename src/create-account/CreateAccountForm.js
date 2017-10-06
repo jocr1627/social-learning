@@ -67,15 +67,22 @@ const usernameRules = [
 const notificationConfigs = {
   duplicate: {
     color: '#D80000',
-    text: 'Sorry! That account name already exists!',
+    notification: <label>Sorry! That account name already exists!</label>,
   },
   error: {
     color: '#D80000',
-    text: 'Sorry! We failed to create your account!',
+    notification: <label>Sorry! We failed to create your account!'</label>,
   },
   success: {
     color: '#28A328',
-    text: 'Your account was created successfully!',
+    notification: (
+      <label>
+        Your account was created successfully!
+        <a href="/login">
+          Login.
+        </a>
+      </label>
+    ),
   },
 };
 const getNotificationType = (errors) => {  
@@ -100,7 +107,9 @@ const getState = (overrides) => {
   };
 };
 
+const buttonText = 'Create';
 const confirmLabelText = 'Confirm your password';
+const loginText = 'I already have an account.';
 const passwordLabelText = 'Password';
 const titleText = 'Create Account';
 const usernameLabelText = 'Username';
@@ -135,11 +144,12 @@ export default class CreateAccountForm extends Component {
     const gridListProps = {
       cellHeight: 20,
       className: getClassName(displayName, 'grid'),
-      cols: 1,
+      cols: 3,
     };
     const notificationConfig = notificationConfigs[notificationType] || {};
     const notificationTileProps = {
       className: getClassName(displayName, 'notification'),
+      cols: 3,
       rows: 1,
       style: {
         color: notificationConfig.color,
@@ -147,10 +157,12 @@ export default class CreateAccountForm extends Component {
     };
     const titleTileProps = {
       className: getClassName(displayName, 'title'),
+      cols: 3,
       rows: 1,
     };
     const fieldTileProps = {
       className: getClassName(displayName, 'field'),
+      cols: 3,
       rows: 4,
     };
     const usernameFieldProps = {
@@ -202,10 +214,17 @@ export default class CreateAccountForm extends Component {
       rows: 2,
     };
     const buttonProps = {
-      label: 'Create Account',
+      label: buttonText,
       onClick: this.onClickCreateAccount,
       primary: true,
       ref: (button) => this.button = button, 
+    };
+    const loginLinkTileProps = {
+      className: getClassName(displayName, 'link'),
+      rows: 2,
+    };
+    const loginLinkProps = {
+      href: '/login',
     };
     
     return (
@@ -217,9 +236,7 @@ export default class CreateAccountForm extends Component {
             </label>
           </GridTile>
           <GridTile { ...notificationTileProps }>
-            <label>
-              { notificationConfig.text }
-            </label>
+            { notificationConfig.notification }
           </GridTile>
           <GridTile { ...fieldTileProps }>
             <label>
@@ -239,8 +256,14 @@ export default class CreateAccountForm extends Component {
             </label>
             <TextField { ...confirmFieldProps }/>
           </GridTile>
+          <GridTile/>
           <GridTile { ...buttonTileProps }>
             <RaisedButton { ...buttonProps }/>
+          </GridTile>
+          <GridTile { ...loginLinkTileProps }>
+            <a { ...loginLinkProps }>
+              { loginText }
+            </a>
           </GridTile>
         </GridList>
       </Paper>

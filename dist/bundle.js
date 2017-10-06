@@ -22488,18 +22488,25 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
+var buttons = {
+  flat: _materialUi.FlatButton,
+  raised: _materialUi.RaisedButton
+};
+
 exports.default = (0, _reactRouterDom.withRouter)(function (_ref) {
   var history = _ref.history,
       _onClick = _ref.onClick,
-      props = _objectWithoutProperties(_ref, ['history', 'onClick']);
+      type = _ref.type,
+      props = _objectWithoutProperties(_ref, ['history', 'onClick', 'type']);
 
   var buttonProps = _extends({}, props, {
     onClick: function onClick() {
       return _onClick(history);
     }
   });
+  var ButtonComponent = buttons[type] || _materialUi.FlatButton;
 
-  return _react2.default.createElement(_materialUi.RaisedButton, buttonProps);
+  return _react2.default.createElement(ButtonComponent, buttonProps);
 });
 
 /***/ }),
@@ -72872,15 +72879,32 @@ var usernameRules = [requiredRule];
 var notificationConfigs = {
   duplicate: {
     color: '#D80000',
-    text: 'Sorry! That account name already exists!'
+    notification: _react2.default.createElement(
+      'label',
+      null,
+      'Sorry! That account name already exists!'
+    )
   },
   error: {
     color: '#D80000',
-    text: 'Sorry! We failed to create your account!'
+    notification: _react2.default.createElement(
+      'label',
+      null,
+      'Sorry! We failed to create your account!\''
+    )
   },
   success: {
     color: '#28A328',
-    text: 'Your account was created successfully!'
+    notification: _react2.default.createElement(
+      'label',
+      null,
+      'Your account was created successfully!',
+      _react2.default.createElement(
+        'a',
+        { href: '/login' },
+        'Login.'
+      )
+    )
   }
 };
 var getNotificationType = function getNotificationType(errors) {
@@ -72906,7 +72930,9 @@ var getState = function getState(overrides) {
   }, overrides);
 };
 
+var buttonText = 'Create';
 var confirmLabelText = 'Confirm your password';
+var loginText = 'I already have an account.';
 var passwordLabelText = 'Password';
 var titleText = 'Create Account';
 var usernameLabelText = 'Username';
@@ -73001,11 +73027,12 @@ var CreateAccountForm = function (_Component) {
       var gridListProps = {
         cellHeight: 20,
         className: (0, _CssUtils.getClassName)(displayName, 'grid'),
-        cols: 1
+        cols: 3
       };
       var notificationConfig = notificationConfigs[notificationType] || {};
       var notificationTileProps = {
         className: (0, _CssUtils.getClassName)(displayName, 'notification'),
+        cols: 3,
         rows: 1,
         style: {
           color: notificationConfig.color
@@ -73013,10 +73040,12 @@ var CreateAccountForm = function (_Component) {
       };
       var titleTileProps = {
         className: (0, _CssUtils.getClassName)(displayName, 'title'),
+        cols: 3,
         rows: 1
       };
       var fieldTileProps = {
         className: (0, _CssUtils.getClassName)(displayName, 'field'),
+        cols: 3,
         rows: 4
       };
       var usernameFieldProps = {
@@ -73068,12 +73097,19 @@ var CreateAccountForm = function (_Component) {
         rows: 2
       };
       var buttonProps = {
-        label: 'Create Account',
+        label: buttonText,
         onClick: this.onClickCreateAccount,
         primary: true,
         ref: function ref(button) {
           return _this2.button = button;
         }
+      };
+      var loginLinkTileProps = {
+        className: (0, _CssUtils.getClassName)(displayName, 'link'),
+        rows: 2
+      };
+      var loginLinkProps = {
+        href: '/login'
       };
 
       return _react2.default.createElement(
@@ -73094,11 +73130,7 @@ var CreateAccountForm = function (_Component) {
           _react2.default.createElement(
             _materialUi.GridTile,
             notificationTileProps,
-            _react2.default.createElement(
-              'label',
-              null,
-              notificationConfig.text
-            )
+            notificationConfig.notification
           ),
           _react2.default.createElement(
             _materialUi.GridTile,
@@ -73130,10 +73162,20 @@ var CreateAccountForm = function (_Component) {
             ),
             _react2.default.createElement(_materialUi.TextField, confirmFieldProps)
           ),
+          _react2.default.createElement(_materialUi.GridTile, null),
           _react2.default.createElement(
             _materialUi.GridTile,
             buttonTileProps,
             _react2.default.createElement(_materialUi.RaisedButton, buttonProps)
+          ),
+          _react2.default.createElement(
+            _materialUi.GridTile,
+            loginLinkTileProps,
+            _react2.default.createElement(
+              'a',
+              loginLinkProps,
+              loginText
+            )
           )
         )
       );
@@ -78313,7 +78355,7 @@ exports = module.exports = __webpack_require__(95)(undefined);
 
 
 // module
-exports.push([module.i, ".sl-CreateAccountForm {\n  display: inline-block;\n  width: 20rem;\n}\n\n.sl-CreateAccountForm-button {\n  text-align: center;\n}\n\n.sl-CreateAccountForm-field input {\n  box-shadow: 0 0 0 2rem white inset;\n}\n\n.sl-CreateAccountForm-field label {\n  font-size: 0.8rem;\n}\n\n.sl-CreateAccountForm-grid {\n  padding: 1rem;\n}\n\n.sl-CreateAccountForm-notification {\n  font-size: 0.8rem;\n  text-align: center;\n}\n\n.sl-CreateAccountForm-title {\n  font-size: 1rem;\n  text-align: center;\n}\n", ""]);
+exports.push([module.i, ".sl-CreateAccountForm {\n  display: inline-block;\n  width: 20rem;\n}\n\n.sl-CreateAccountForm-button {\n  text-align: center;\n}\n\n.sl-CreateAccountForm-field input {\n  box-shadow: 0 0 0 2rem white inset;\n}\n\n.sl-CreateAccountForm-field label {\n  font-size: 0.8rem;\n}\n\n.sl-CreateAccountForm-grid {\n  padding: 1rem;\n}\n\n.sl-CreateAccountForm-link {\n  font-size: 0.7rem;\n  left: 10%;\n  position: relative;\n  text-align: center;\n  top: 25%;\n}\n\n.sl-CreateAccountForm-notification {\n  font-size: 0.8rem;\n  text-align: center;\n}\n\n.sl-CreateAccountForm-notification a {\n  padding-left: 0.5rem;\n}\n\n.sl-CreateAccountForm-title {\n  font-size: 1rem;\n  text-align: center;\n}\n", ""]);
 
 // exports
 
@@ -78566,7 +78608,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var buttonText = 'Login';
+var createAccountText = 'Create Account';
 var loginFailedText = 'Sorry! Your login was incorrect!';
 var passwordLabelText = 'Password';
 var titleText = 'Login';
@@ -78626,18 +78668,21 @@ var LoginForm = function (_Component) {
       var gridListProps = {
         cellHeight: 20,
         className: (0, _CssUtils.getClassName)(displayName, 'grid'),
-        cols: 1
+        cols: 3
       };
       var notificationTileProps = {
         className: (0, _CssUtils.getClassName)(displayName, 'notification'),
+        cols: 3,
         rows: 1
       };
       var titleTileProps = {
         className: (0, _CssUtils.getClassName)(displayName, 'title'),
+        cols: 3,
         rows: 1
       };
       var fieldTileProps = {
         className: (0, _CssUtils.getClassName)(displayName, 'field'),
+        cols: 3,
         rows: 4
       };
       var usernameFieldProps = {
@@ -78662,9 +78707,17 @@ var LoginForm = function (_Component) {
         rows: 2
       };
       var buttonProps = {
-        label: buttonText,
+        label: titleText,
         onClick: this.onClickLoginButton,
-        primary: true
+        primary: true,
+        type: 'raised'
+      };
+      var createAccountLinkTileProps = {
+        className: (0, _CssUtils.getClassName)(displayName, 'link'),
+        rows: 2
+      };
+      var createAccountLinkProps = {
+        href: '/createAccount'
       };
 
       return _react2.default.createElement(
@@ -78711,10 +78764,20 @@ var LoginForm = function (_Component) {
             ),
             _react2.default.createElement(_materialUi.TextField, passwordFieldProps)
           ),
+          _react2.default.createElement(_materialUi.GridTile, null),
           _react2.default.createElement(
             _materialUi.GridTile,
             buttonTileProps,
             _react2.default.createElement(_NavigationButton2.default, buttonProps)
+          ),
+          _react2.default.createElement(
+            _materialUi.GridTile,
+            createAccountLinkTileProps,
+            _react2.default.createElement(
+              'a',
+              createAccountLinkProps,
+              createAccountText
+            )
           )
         )
       );
@@ -78806,7 +78869,9 @@ function login(name, password, _onCompleted) {
         args[_key - 1] = arguments[_key];
       }
 
-      localStorage.setItem('user_id', data.login.user.id);
+      var id = data.login.user && data.login.user.id;
+
+      localStorage.setItem('user_id', id);
 
       _onCompleted.apply(undefined, [data].concat(args));
     },
@@ -78996,7 +79061,7 @@ exports = module.exports = __webpack_require__(95)(undefined);
 
 
 // module
-exports.push([module.i, ".sl-LoginForm {\n  display: inline-block;\n  width: 20rem;\n}\n\n.sl-LoginForm-button {\n  text-align: center;\n}\n\n.sl-LoginForm-field input {\n  box-shadow: 0 0 0 2rem white inset;\n}\n\n.sl-LoginForm-field label {\n  font-size: 0.8rem;\n}\n\n.sl-LoginForm-grid {\n  padding: 1rem;\n}\n\n.sl-LoginForm-notification {\n  color: #D80000;\n  font-size: 0.8rem;\n  text-align: center;\n}\n\n.sl-LoginForm-title {\n  font-size: 1rem;\n  text-align: center;\n}\n", ""]);
+exports.push([module.i, ".sl-LoginForm {\n  display: inline-block;\n  width: 20rem;\n}\n\n.sl-LoginForm-button {\n  text-align: center;\n}\n\n.sl-LoginForm-field input {\n  box-shadow: 0 0 0 2rem white inset;\n}\n\n.sl-LoginForm-field label {\n  font-size: 0.8rem;\n}\n\n.sl-LoginForm-grid {\n  padding: 1rem;\n}\n\n.sl-LoginForm-link {\n  font-size: 0.7rem;\n  left: 10%;\n  position: relative;\n  text-align: center;\n  top: 25%;\n}\n\n.sl-LoginForm-notification {\n  color: #D80000;\n  font-size: 0.8rem;\n  text-align: center;\n}\n\n.sl-LoginForm-title {\n  font-size: 1rem;\n  text-align: center;\n}\n", ""]);
 
 // exports
 

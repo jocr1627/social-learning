@@ -1,12 +1,21 @@
-import { RaisedButton } from 'material-ui';
+import {
+  FlatButton,
+  RaisedButton,
+} from 'material-ui';
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 
-export default withRouter(({ history, onClick, ...props }) => {
+const buttons = {
+  flat: FlatButton,
+  raised: RaisedButton,
+};
+
+export default withRouter(({ history, onClick, type, ...props }) => {
   const buttonProps = {
     ...props,    
     onClick: () => onClick(history),
   };
+  const ButtonComponent = buttons[type] || FlatButton;
 
-  return <RaisedButton { ...buttonProps }/>;
+  return <ButtonComponent { ...buttonProps }/>;
 });

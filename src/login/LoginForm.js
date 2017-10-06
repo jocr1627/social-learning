@@ -14,7 +14,7 @@ import login from './LoginMutation';
 
 import './LoginForm.css';
 
-const buttonText = 'Login';
+const createAccountText = 'Create Account';
 const loginFailedText = 'Sorry! Your login was incorrect!';
 const passwordLabelText = 'Password';
 const titleText = 'Login';
@@ -45,18 +45,21 @@ export default class LoginForm extends Component {
     const gridListProps = {
       cellHeight: 20,
       className: getClassName(displayName, 'grid'),
-      cols: 1,
+      cols: 3,
     };
     const notificationTileProps = {
       className: getClassName(displayName, 'notification'),
+      cols: 3,
       rows: 1,
     };
     const titleTileProps = {
       className: getClassName(displayName, 'title'),
+      cols: 3,
       rows: 1,
     };
     const fieldTileProps = {
       className: getClassName(displayName, 'field'),
+      cols: 3,
       rows: 4,
     };
     const usernameFieldProps = {
@@ -77,9 +80,17 @@ export default class LoginForm extends Component {
       rows: 2,
     };
     const buttonProps = {
-      label: buttonText,
+      label: titleText,
       onClick: this.onClickLoginButton,
       primary: true,
+      type: 'raised',
+    };
+    const createAccountLinkTileProps = {
+      className: getClassName(displayName, 'link'),
+      rows: 2,
+    };
+    const createAccountLinkProps = {
+      href: '/createAccount',
     };
 
     return (
@@ -107,8 +118,14 @@ export default class LoginForm extends Component {
             </label>
             <TextField { ...passwordFieldProps }/>
           </GridTile>
+          <GridTile/>
           <GridTile { ...buttonTileProps }>
             <NavigationButton { ...buttonProps }/>
+          </GridTile>
+          <GridTile { ...createAccountLinkTileProps }>
+            <a { ...createAccountLinkProps }>
+              { createAccountText }
+            </a>
           </GridTile>
         </GridList>
       </NavigationPaper>

@@ -19,9 +19,21 @@
   padding: 1rem;
 }
 
+.sl-CreateAccountForm-link {
+  font-size: 0.7rem;
+  left: 10%;
+  position: relative;
+  text-align: center;
+  top: 25%;
+}
+
 .sl-CreateAccountForm-notification {
   font-size: 0.8rem;
   text-align: center;
+}
+
+.sl-CreateAccountForm-notification a {
+  padding-left: 0.5rem;
 }
 
 .sl-CreateAccountForm-title {
