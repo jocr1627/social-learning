@@ -1,0 +1,11 @@
+.sl-LogoutButton {
+  position: absolute;
+  right: 0.5rem;
+  top: 0.5rem;
+}
+
+.sl-PostsPage {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+}

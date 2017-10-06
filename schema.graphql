@@ -1,3 +1,8 @@
+input CreatePostInput {
+  text: String!
+  userId: ID!
+}
+
 input CreateUserInput {
   name: String!
   password: String!
@@ -12,8 +17,12 @@ interface Node {
   id: ID!
 }
 
+type CreatePostPayload {
+  post: Post
+}
+
 type CreateUserPayload {
-  user: User!
+  user: User
 }
 
 type LoginPayload {
@@ -21,8 +30,14 @@ type LoginPayload {
 }
 
 type Mutation {
+  createPost(input: CreatePostInput!): CreatePostPayload
   createUser(input: CreateUserInput!): CreateUserPayload
   login(input: LoginInput!): LoginPayload
+}
+
+type Post {
+  text: String!
+  user: User!
 }
 
 type Query {

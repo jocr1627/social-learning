@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 
-import NavigationButton from '../components/NavigationButton';
+import LogoutButton from '../components/LogoutButton';
+import { getClassName } from '../css/CssUtils';
 
-const logoutButtonText = 'Logout';
+import PostForm from './PostForm';
+
+import './PostsPage.css';
 
 const displayName = 'PostsPage';
 
@@ -10,14 +13,15 @@ export default class PostsPage extends Component {
   static displayName = displayName;
 
   render() {
-    const buttonProps = {
-      label: logoutButtonText,
-      onClick: (history) => {
-        localStorage.removeItem('user_id');
-        history.push('/');
-      },
+    const divProps = {
+      className: getClassName(displayName),
     };
-    
-    return <NavigationButton { ...buttonProps }/>;
+
+    return (
+      <div { ...divProps }>
+        <PostForm/>
+        <LogoutButton/>
+      </div>
+    );
   }
 }

@@ -12,7 +12,7 @@
 }
 
 .sl-LoginForm-field label {
-  font-size: 0.8rem;
+  font-size: 1rem;
 }
 
 .sl-LoginForm-grid {
@@ -29,7 +29,7 @@
 
 .sl-LoginForm-notification {
   color: #D80000;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   text-align: center;
 }
 

@@ -1,0 +1,21 @@
+.sl-PostForm {
+  display: inline-block;
+  width: 40rem;
+}
+
+.sl-PostForm-button {
+  text-align: center;
+}
+
+.sl-PostForm-title {
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.sl-PostForm-field {
+  border: 0.1rem solid lightgray;
+}
+
+.sl-PostForm-grid {
+  padding: 1rem;
+}

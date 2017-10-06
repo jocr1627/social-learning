@@ -4,6 +4,7 @@ import {
   RecordSource,
   Store,
 } from 'relay-runtime';
+import 'whatwg-fetch';
 
 const source = new RecordSource();
 const store = new Store(source);
