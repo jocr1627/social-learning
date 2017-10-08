@@ -73332,7 +73332,7 @@ var validate = function validate(rules) {
   return errorText;
 };
 var lengthRule = function lengthRule(value) {
-  return value.length >= 6 ? '' : 'Password be at least 6 characters long.';
+  return value.length >= 6 ? '' : 'Password must be at least 6 characters long.';
 };
 var matchRule = function matchRule(confirmValue, passwordValue) {
   return confirmValue == passwordValue ? '' : 'These passwords do not match.';

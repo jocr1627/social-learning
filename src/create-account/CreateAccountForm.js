@@ -28,7 +28,7 @@ const validate = (rules, ...args) => {
 };
 const lengthRule = (value) => {
   return (value.length >= 6) ?
-    '' : 'Password be at least 6 characters long.';
+    '' : 'Password must be at least 6 characters long.';
 };
 const matchRule = (confirmValue, passwordValue) => {
   return (confirmValue == passwordValue) ?
