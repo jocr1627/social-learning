@@ -33,6 +33,7 @@
     "express": "^4.16.0",
     "express-graphql": "^0.6.11",
     "graphql": "^0.11.6",
+    "linkify-it": "^2.0.3",
     "material-ui": "^0.19.2",
     "pg": "^7.3.0",
     "pg-native": "^2.2.0",
@@ -45,6 +46,8 @@
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
     "superagent": "^3.6.1",
+    "tlds": "^1.197.0",
+    "url-regex": "^4.1.1",
     "whatwg-fetch": "^2.0.3"
   }
 }

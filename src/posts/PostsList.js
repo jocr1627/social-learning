@@ -26,10 +26,13 @@ class PostsList extends Component {
         key: node.__id,
         post: node,
       };
+      const dividerProps = {
+        key: `${node.__id}-divider`,
+      };
 
       return [
         <Post { ...postProps }/>,
-        <Divider/>
+        <Divider { ...dividerProps }/>
       ];
     });
 
