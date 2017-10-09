@@ -14,6 +14,7 @@ The app is built using the following stack:
 * [Relay](https://facebook.github.io/relay/) (Client-Side State Management)
 * [React](https://reactjs.org/) (User Interface)
 * [Material UI](http://www.material-ui.com/) (UI Components)
+* [Jest](https://facebook.github.io/jest/) (JavaScript Testing)
 
 # Application
 The goal of this app is to bring empathy to the internet. There is so much valuable information out there, but few ways to make sure it gets to the right people at the right time. A search engine delivers people content that matches their search terms and history. Social media delivers people content based on their friends, profile, and what's popular. Once we synthesize these ideas to create social searching, we can change lives by making learning faster and easier than it has ever been before. [Click here](https://trello.com/b/eiDwBoA0/social-learning) to see the user stories that I've created to track the work. Below are some user interactions that may help explain the long-term vision.

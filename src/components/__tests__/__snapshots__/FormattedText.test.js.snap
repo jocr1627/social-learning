@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FormattedText replaces newlines with <br/> 1`] = `
+<span>
+  <br />
+        Consider, once more, the universal cannibalism of the sea; all whose creatures prey upon each other, carrying on eternal war since the world began.
+  <br />
+        
+  <br />
+        Consider all this; and then turn to the green, gentle, and most docile earth; consider them both, the sea and the land; and do you not find a strange analogy to something in yourself?
+  <br />
+      
+</span>
+`;
+
+exports[`FormattedText replaces urls with <a/> 1`] = `
+<span>
+  <br />
+        Try out our recipes at 
+  <a
+    href="http://delicious-fries.com"
+    target="_blank"
+  >
+    http://delicious-fries.com
+  </a>
+  .
+  <br />
+        In need of a change? 
+  <a
+    href="http://www.dime-to-exercise.net"
+    target="_blank"
+  >
+    http://www.dime-to-exercise.net
+  </a>
+  .
+  <br />
+        We knew you'd be back 
+  <a
+    href="https://www.burgertopia.org/menu?time=lunch"
+    target="_blank"
+  >
+    https://www.burgertopia.org/menu?time=lunch
+  </a>
+  <br />
+      
+</span>
+`;
