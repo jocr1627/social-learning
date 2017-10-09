@@ -5,12 +5,7 @@ import { withRouter } from 'react-router-dom';
 export default withRouter(({ children, history, onKeyPress, ...props }) => {
   const paperProps = {
     ...props,
-    onKeyPress: (key) => {
-      if (key.key == 'Enter') {
-        
-        onKeyPress(history);
-      }
-    },
+    onKeyPress: (...args) => onKeyPress(history, ...args),
   };
 
   return (

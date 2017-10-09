@@ -13,7 +13,7 @@ const buttons = {
 export default withRouter(({ history, onClick, type, ...props }) => {
   const buttonProps = {
     ...props,    
-    onClick: () => onClick(history),
+    onClick: (...args) => onClick(history, ...args),
   };
   const ButtonComponent = buttons[type] || FlatButton;
 

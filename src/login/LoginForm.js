@@ -39,7 +39,11 @@ export default class LoginForm extends Component {
     } = this.state;
     const paperProps = {
       className: getClassName(displayName),
-      onKeyPress: this.onClickLoginButton,
+      onKeyPress: (history, key) => {
+        if (key.key == 'Enter') {
+          this.onClickLoginButton(history);
+        }
+      },
       zDepth: 2,
     };
     const gridListProps = {

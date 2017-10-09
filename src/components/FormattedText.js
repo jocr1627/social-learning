@@ -19,7 +19,7 @@ const insertLineBreaks = (text, elements) => {
 
     if (index < textBlocks.length - 1) {
       const brProps = {
-        key: lineBreakKeyIndex++,
+        key: `br-${lineBreakKeyIndex++}`,
       };
       const br = <br { ...brProps }/>;
 
@@ -30,13 +30,13 @@ const insertLineBreaks = (text, elements) => {
 
 const getFormattedElements = (text) => {
   const linkMatches = linkify.match(text) || [];
-  let elements = [];
+  const elements = [];
   let currentIndex = 0;
 
   linkMatches.forEach((match, matchIndex) => {
     const linkProps = {
       href: match.url,
-      key: matchIndex,
+      key: `a-${matchIndex}`,
       target: '_blank',
     };
     const link = <a { ...linkProps }>{ match.url }</a>;

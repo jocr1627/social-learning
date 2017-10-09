@@ -22970,7 +22970,11 @@ exports.default = (0, _reactRouterDom.withRouter)(function (_ref) {
 
   var buttonProps = _extends({}, props, {
     onClick: function onClick() {
-      return _onClick(history);
+      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      return _onClick.apply(undefined, [history].concat(args));
     }
   });
   var ButtonComponent = buttons[type] || _materialUi.FlatButton;
@@ -79112,7 +79116,11 @@ var LoginForm = function (_Component) {
 
       var paperProps = {
         className: (0, _CssUtils.getClassName)(displayName),
-        onKeyPress: this.onClickLoginButton,
+        onKeyPress: function onKeyPress(history, key) {
+          if (key.key == 'Enter') {
+            _this2.onClickLoginButton(history);
+          }
+        },
         zDepth: 2
       };
       var gridListProps = {
@@ -79272,11 +79280,12 @@ exports.default = (0, _reactRouterDom.withRouter)(function (_ref) {
       props = _objectWithoutProperties(_ref, ['children', 'history', 'onKeyPress']);
 
   var paperProps = _extends({}, props, {
-    onKeyPress: function onKeyPress(key) {
-      if (key.key == 'Enter') {
-
-        _onKeyPress(history);
+    onKeyPress: function onKeyPress() {
+      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
       }
+
+      return _onKeyPress.apply(undefined, [history].concat(args));
     }
   });
 
@@ -80533,7 +80542,7 @@ var insertLineBreaks = function insertLineBreaks(text, elements) {
 
     if (index < textBlocks.length - 1) {
       var brProps = {
-        key: lineBreakKeyIndex++
+        key: 'br-' + lineBreakKeyIndex++
       };
       var br = _react2.default.createElement('br', brProps);
 
@@ -80550,7 +80559,7 @@ var getFormattedElements = function getFormattedElements(text) {
   linkMatches.forEach(function (match, matchIndex) {
     var linkProps = {
       href: match.url,
-      key: matchIndex,
+      key: 'a-' + matchIndex,
       target: '_blank'
     };
     var link = _react2.default.createElement(
