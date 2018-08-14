@@ -1,5 +1,5 @@
 # Welcome!
-My name is John Cronk. I am a software engineer located in the Boulder, CO area. This repository serves three goals:
+My name is John Cronk. I am a software engineer located in the Pittsburgh, PA area. This repository serves three goals:
 * To demonstrate a portion of my skillset as a software engineer.
 * To aid in my learning of GraphQL.
 * To develop a passion project of mine.
